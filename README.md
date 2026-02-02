@@ -1,3 +1,63 @@
+# Instagram Aesthetic AI Agent
+
+An AI-powered agent that analyzes an Instagram account’s existing aesthetic and automatically generates on-brand post concepts, design briefs, and captions optimized for engagement goals such as saves, shares, or comments.
+
+This project focuses on **automation + consistency**: instead of manually deciding what to post, the agent learns your visual and textual style once, stores it as memory, and uses it to curate future posts that fit your grid.
+
+---
+
+## Core Idea
+
+The agent operates as a multi-stage pipeline:
+
+1. **Aesthetic Ingestion** – Analyze existing Instagram posts (via grid screenshots)
+2. **Style Extraction** – Extract color palette, contrast, layout density, and caption voice
+3. **Aesthetic Memory** – Store a reusable style profile
+4. **Post Generation** – Produce post concepts, design briefs, and captions
+5. **Optimization & Ranking** – Score outputs based on aesthetic fit and post goal
+6. **Export** – Provide Canva/Figma-ready design instructions and captions
+
+The result is a repeatable, automated workflow for creating Instagram content that stays visually and tonally consistent.
+
+---
+
+## Features
+
+- 📸 Upload Instagram grid screenshots to learn aesthetic
+- 🎨 Automatic color palette and layout extraction
+- 🧠 Persistent aesthetic memory (style profile)
+- 🖼️ Design recipe system (carousel, photo post, text card, etc.)
+- ✍️ Caption generation that matches your writing voice
+- 📊 Scoring and ranking for engagement goals
+- 📄 Exportable design briefs for Canva or Figma
+- 🔁 Feedback-ready architecture for future learning
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js (React + API routes)
+- Tailwind CSS (UI)
+
+### Backend
+- Node.js / TypeScript
+- OpenAI-compatible LLM for generation and critique
+
+### Image Processing
+- `sharp` – image preprocessing
+- `node-vibrant` – color palette extraction
+
+### Database
+- SQLite
+- Prisma ORM
+
+---
+
+## System Architecture
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
