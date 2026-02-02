@@ -1,14 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  brands    Brand[]
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  name      String
+  handle    String?
+  createdAt DateTime @default(now())
+
+  ownerId   String?
+  owner     User?    @relation(fields: [ownerId], references: [id])
+
+  assets    Asset[]
+  palettes  Palette[]
+  posts     Post[]
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  type      String
+  url       String
+  createdAt DateTime @default(now())
+
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id])
+}
+
+model Palette {
+  id        String   @id @default(cuid())
+  name      String
+  colors    String[]
+  createdAt DateTime @default(now())
+
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  caption     String?
+  imageUrl    String?
+  scheduledAt DateTime?
+  createdAt   DateTime @default(now())
+
+  brandId     String
+  brand       Brand    @relation(fields: [brandId], references: [id])
 }
