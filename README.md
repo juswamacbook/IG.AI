@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Instagram Aesthetic AI Agent
 
-## Getting Started
+An AI-powered agent that analyzes an Instagram brand’s aesthetic and generates on-brand palette ideas and mood captions. The current app provides a brand workspace with palette management and local AI generation via Ollama.
 
-First, run the development server:
+---
+
+## What It Does (Current)
+
+- Create brands and palettes
+- Store palettes in Postgres via Prisma
+- Generate palette suggestions + mood captions with a **local** AI model (Ollama)
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js (App Router)
+- Tailwind CSS
+
+### Backend
+- Node.js / TypeScript
+- Prisma ORM
+- Local AI via Ollama (no API key required)
+
+### Database
+- Postgres (Docker recommended)
+
+---
+
+## Setup
+
+### 1) Install dependencies
+
+```bash
+npm install
+```
+
+### 2) Start Postgres (Docker)
+
+```bash
+docker run --name ig-ai-postgres   -e POSTGRES_USER=igai   -e POSTGRES_PASSWORD=igai_password   -e POSTGRES_DB=ig_ai   -p 5432:5432   -d postgres:16
+```
+
+If the container already exists:
+
+```bash
+docker start ig-ai-postgres
+```
+
+### 3) Configure environment
+
+Create or update `.env`:
+
+```
+DATABASE_URL="postgresql://igai:igai_password@localhost:5432/ig_ai?schema=public"
+OLLAMA_BASE_URL="http://localhost:11434"
+OLLAMA_MODEL="llama3.1:8b"
+```
+
+### 4) Create DB schema
+
+```bash
+npm run db:push
+```
+
+### 5) Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local AI (Ollama)
 
-## Learn More
+Install and run Ollama, then pull the model:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+ollama run llama3.1:8b
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sanity check:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+curl http://localhost:11434/api/tags
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Prisma Commands
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run db:generate
+npm run db:push
+npm run db:migrate
+npm run db:studio
+```
+
+---
+
+## Roadmap (Planned)
+
+- Screenshot ingestion + palette extraction
+- Aesthetic memory profile
+- Design brief generation
+- Exportable Figma/Canva design recipes
